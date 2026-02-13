@@ -1,9 +1,10 @@
 # About
-This is the demo site for [Fuwari](https://github.com/saicaca/fuwari).
+Hi, I am **Eatgrapes**, a developer.
 
-::github{repo="saicaca/fuwari"}
+This blog is built with [Astro](https://astro.build) and [Fuwari](https://github.com/saicaca/fuwari).
 
-> ### Sources of images used in this site
-> - [Unsplash](https://unsplash.com/)
-> - [星と少女](https://www.pixiv.net/artworks/108916539) by [Stella](https://www.pixiv.net/users/93273965)
-> - [Rabbit - v1.4 Showcase](https://civitai.com/posts/586908) by [Rabbit_YourMajesty](https://civitai.com/user/Rabbit_YourMajesty)
+- GitHub: [Eatgrapes](https://github.com/Eatgrapes)
+- Telegram: [@Eatgrapes232](https://t.me/Eatgrapes232)
+- Email: [admin@tanikaze.icu](mailto:admin@tanikaze.icu)
+- Website: [tanikaze.icu](https://tanikaze.icu)
+- Bilibili: [UID 1455394496](https://space.bilibili.com/1455394496)
