@@ -45,13 +45,9 @@ draft: false
 
 ## 一些参考链接
 
-- JetBrains: IntelliJ IDEA Unified 发布说明  
-  https://blog.jetbrains.com/idea/2025/11/intellij-idea-unified-a-single-ide-for-your-entire-workflow/
-- JetBrains 官方文档：Unified product  
-  https://www.jetbrains.com/help/idea/unified-product.html
+- JetBrains: IntelliJ IDEA 发布说明  
+  https://www.jetbrains.com/zh-cn/help/idea/intellij-idea-single-distribution.html
 - Eclipse IDE
   https://eclipseide.org/
 - Eclipse Java 开发者发行包 
   https://www.eclipse.org/downloads/packages/release/2025-09/r/eclipse-ide-java-developers
-- Eclipse JDT UI issue
-  https://github.com/eclipse-jdt/eclipse.jdt.ui/issues/3041
