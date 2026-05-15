@@ -1,7 +1,7 @@
 ---
 title: "ZKM 控制流混淆破解"
 description: "反混淆 Zelix KlassMaster 的控制流混淆。"
-pubDate: 2026-05-15
+published: 2026-05-15
 tags: ["Java", "ASM", "ZKM", "Bytecode", "Deobfuscation"]
 category: Java
 draft: false
