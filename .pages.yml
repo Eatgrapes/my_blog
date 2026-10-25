@@ -1,0 +1,68 @@
+media:
+  input: public/uploads
+  output: /my_blog/uploads
+  categories: [image]
+  rename: safe
+
+content:
+  - name: posts
+    label: Articles
+    type: collection
+    path: src/content/posts
+    format: yaml-frontmatter
+    filename:
+      template: "{primary}.md"
+      field: create
+    view:
+      primary: title
+      fields: [title, published, category, draft]
+      sort: [published, title]
+      default:
+        sort: published
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: published
+        label: Publish date
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: description
+        label: Description
+        type: text
+      - name: category
+        label: Category
+        type: string
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+      - name: image
+        label: Cover image
+        type: image
+      - name: draft
+        label: Draft
+        type: boolean
+        default: false
+      - name: body
+        label: Article
+        type: rich-text
+        required: true
+        options:
+          format: markdown
+          switcher: true
+
+settings:
+  content:
+    merge: true
+  commit:
+    identity: user
+    templates:
+      create: "docs(posts): add {filename}"
+      update: "docs(posts): update {filename}"
+      delete: "docs(posts): remove {filename}"
+      rename: "docs(posts): rename {oldFilename} to {newFilename}"

@@ -1,128 +1,311 @@
+@reference "tailwindcss";
+
 .custom-md {
-    h1 {
-        @apply text-3xl;
+  line-height: 1.95;
+  overflow-wrap: anywhere;
+  h1 {
+    @apply text-3xl;
+  }
+
+  :is(h1, h2, h3, h4, h5, h6) {
+    .anchor {
+      @apply transition -m-0.5 ms-[0.2ch] p-0.5 select-none opacity-0 no-underline;
+
+      .anchor-icon {
+        @apply mx-[0.45ch];
+      }
     }
 
-    h1, h2, h3, h4, h5, h6 {
-        .anchor {
-            @apply transition -m-0.5 ml-[0.2ch] p-0.5 select-none opacity-0 no-underline !important;
+    &:hover .anchor {
+      @apply opacity-100;
+    }
+  }
 
-            .anchor-icon {
-                @apply mx-[0.45ch] !important;
-            }
-        }
+  /* --- 链接 --- */
+  a:not(.no-styling) {
+    @apply relative bg-none font-medium text-(--primary)
+        underline decoration-(--link-underline) decoration-1 decoration-dashed underline-offset-4;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
 
-        &:hover {
-            .anchor {
-                @apply opacity-100 !important;
-            }
-        }
+    &:hover,
+    &:active {
+      @apply decoration-transparent;
+      background: var(--btn-plain-bg-hover);
+      border-bottom: 1px dashed var(--link-hover);
+      text-decoration: none;
+    }
+  }
+
+  /* --- 代码块 --- */
+  code {
+    @apply bg-(--inline-code-bg) text-(--inline-code-color) px-1 py-0.5 rounded-md overflow-hidden;
+
+    font-family: var(
+      --font-fira-code,
+      "Fira Code",
+      ui-monospace,
+      SFMono-Regular,
+      Menlo,
+      Monaco,
+      Consolas,
+      "Liberation Mono",
+      "Courier New",
+      monospace
+    );
+
+    &:before,
+    &:after {
+      content: none;
     }
 
-    a:not(.no-styling) {
-        @apply relative bg-none transition rounded-md p-1 -m-1
-        before:ease-out before:transition active:bg-none
-        hover:before:bg-[var(--btn-plain-bg-hover)] active:before:bg-[var(--btn-plain-bg-active)]
-        z-0 before:absolute before:rounded-[inherit] before:inset-0 before:scale-[0.85] hover:before:scale-100 before:-z-10
-        font-medium text-[var(--primary)]
-        underline decoration-[var(--link-underline)] decoration-1 decoration-dashed underline-offset-4;
-        box-decoration-break: clone;
-        -webkit-box-decoration-break: clone;
-        display: inline-block;
-    
-        &:hover, &:active {
-            @apply decoration-transparent;
-            background: var(--btn-plain-bg-hover);
-            border-bottom: 1px dashed var(--link-hover);
-            text-decoration: none;
-        }
+    counter-reset: line;
+    span.line {
+      &:before {
+        @apply text-white/25 mr-4 w-4 inline-block select-none;
+        content: counter(line);
+        counter-increment: line;
+        direction: rtl;
+      }
+      &:last-child:empty,
+      &:last-child:has(> span:empty:only-child) {
+        display: none;
+      }
+    }
+  }
+
+  /* --- 标题间距 --- */
+  :is(h1, h2, h3) {
+    @apply mt-4 mb-2;
+  }
+
+  /* --- 列表 --- */
+  ul,
+  ol {
+    li::marker {
+      @apply text-(--primary);
+    }
+  }
+
+  /* --- 引用块 --- */
+  blockquote {
+    @apply not-italic border-transparent relative;
+    font-weight: inherit;
+
+    &:before {
+      @apply content-[''] absolute left-0 block transition bg-(--btn-regular-bg) h-full w-1 rounded-full;
     }
 
-    code {
-        @apply bg-[var(--inline-code-bg)] text-[var(--inline-code-color)] px-1 py-0.5 rounded-md overflow-hidden;
+    p:before,
+    p:after {
+      @apply content-none;
+    }
+  }
 
-        font-family: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
-        &:before {
-            content:none;
-        }
-        &:after {
-            content:none;
-        }
+  /* --- Standalone Markdown images --- */
+  .markdown-image-figure {
+    margin: 1.5rem 0;
+  }
 
-        counter-reset: line;
-        span.line {
-            &:before {
-                @apply text-white/25 mr-4 w-4 inline-block;
-                content: counter(line);
-                counter-increment: line;
-                direction: rtl;
-            }
-            &:last-child:empty, &:last-child:has(> span:empty:only-child) {
-                display: none;
-            }
-        }
+  .markdown-image-figure > img {
+    display: block;
+    margin-inline: auto;
+  }
+
+  .markdown-image-caption {
+    margin-top: 0.5rem;
+    color: var(--tw-prose-body);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  /* --- 表格样式 --- */
+  .table-wrapper {
+    @apply w-full overflow-x-auto m-0 rounded-(--radius-large);
+    -webkit-overflow-scrolling: touch;
+
+    /* --- 滚动条样式 --- */
+    &::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+      margin: 0 calc(var(--radius-large) + 2px);
+    }
+    &::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-bg);
+      border-radius: 4px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: var(--scrollbar-bg-hover);
+    }
+    &::-webkit-scrollbar-thumb:active {
+      background: var(--scrollbar-bg-active);
+    }
+  }
+
+  /* --- 图片画廊网格 --- */
+  .image-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--image-grid-columns), minmax(0, 1fr));
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+  }
+
+  .image-grid__item {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .image-grid__link {
+    display: block;
+    aspect-ratio: var(--image-grid-aspect-ratio);
+    overflow: hidden;
+    border-radius: var(--radius-large);
+    background: var(--btn-regular-bg);
+    line-height: 0;
+  }
+
+  .image-grid__link:hover,
+  .image-grid__link:active {
+    border-bottom: 0;
+    background: var(--btn-regular-bg);
+  }
+
+  .image-grid__link > img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    aspect-ratio: auto;
+    border-radius: 0 !important;
+    object-fit: var(--image-grid-fit) !important;
+    object-position: center;
+    transition: transform 180ms ease;
+  }
+
+  .image-grid__link:hover > img {
+    transform: scale(1.03);
+  }
+
+  .image-grid__caption {
+    margin-top: auto;
+    padding-top: 0.45rem;
+    color: var(--tw-prose-body);
+    font-size: 0.875rem;
+    line-height: 1.35;
+    text-align: center;
+  }
+
+  @media (width < 768px) {
+    .image-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .copy-btn {
-        all: initial;
-        @apply flex items-center justify-center
-        bg-[oklch(0.45_0.01_var(--hue))] hover:bg-[oklch(0.50_0.01_var(--hue))] active:bg-[oklch(0.55_0.01_var(--hue))]
-        dark:bg-[oklch(0.30_0.02_var(--hue))] dark:hover:bg-[oklch(0.35_0.03_var(--hue))] dark:active:bg-[oklch(0.40_0.03_var(--hue))]
-        opacity-0 shadow-lg shadow-black/50 absolute active:scale-90 h-8 w-8 top-3 right-3 text-sm rounded-lg transition-all ease-in-out z-20 cursor-pointer;
+    .image-grid[data-columns="1"] {
+      grid-template-columns: 1fr;
     }
-    .frame:hover .copy-btn {
-        opacity: 1;
-    }
+  }
 
-    .copy-btn-icon {
-        @apply absolute top-1/2 left-1/2 transition -translate-x-1/2 -translate-y-1/2 w-4 h-4 fill-white pointer-events-none;
+  @media (width < 480px) {
+    .image-grid {
+      grid-template-columns: 1fr;
     }
-    .copy-btn .copy-icon {
-        @apply opacity-100 fill-white dark:fill-white/75;
-    }
-    .copy-btn.success .copy-icon {
-        @apply opacity-0 fill-[var(--deep-text)]
-    }
-    .copy-btn .success-icon {
-        @apply opacity-0 fill-white;
-    }
-    .copy-btn.success .success-icon {
-        @apply opacity-100
-    }
+  }
 
-    .expressive-code {
-        @apply my-4;
-        ::selection {
-            @apply bg-[var(--codeblock-selection)];
-        }
+  table {
+    @apply w-full border-separate m-0 bg-(--card-bg);
+    border-spacing: 0;
+
+    border: 1px solid var(--line-divider);
+    border-radius: var(--radius-large);
+
+    overflow: hidden;
+  }
+
+  th,
+  td {
+    @apply px-4 py-3 whitespace-nowrap;
+    border-bottom: 1px solid var(--line-divider);
+    border-right: 1px solid var(--line-divider);
+    transition: none;
+  }
+
+  th {
+    background-color: var(--btn-regular-bg);
+    color: var(--btn-content);
+    font-weight: 600;
+    text-align: left;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+  th:last-child,
+  td:last-child {
+    border-right: none;
+  }
+
+  tr:nth-child(even) {
+    background-color: var(--codeblock-bg);
+  }
+  tr:hover td {
+    background-color: var(--btn-plain-bg-hover);
+    transition: none;
+  }
+
+  /* --- 数学公式样式 --- */
+  .katex-display {
+    @apply w-full overflow-x-auto overflow-y-hidden box-border my-4;
+    padding: 1rem;
+    border: 1px solid var(--line-divider);
+    border-radius: 0.875rem;
+    background: var(--codeblock-bg);
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
     }
-
-
-    ul, ol {
-        li::marker {
-            @apply text-[var(--primary)];
-        }
+    &::-webkit-scrollbar-track {
+      background: transparent;
     }
-
-    blockquote {
-        @apply not-italic border-transparent relative;
-        font-weight: inherit;
-
-        &:before {
-            @apply content-[''] absolute -left-1 block transition bg-[var(--btn-regular-bg)] h-full w-1 rounded-full;
-        }
-
-        /* Remove the double quotes from default styles */
-        p:before, p:after {
-            @apply content-none;
-        }
-
+    &::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-bg);
+      border-radius: 4px;
     }
-
-    .katex-display-container {
-        max-width: 100%;
-        overflow-x: auto;
-        margin: 1em 0;
+    &::-webkit-scrollbar-thumb:hover {
+      background: var(--scrollbar-bg-hover);
     }
-    
+    &::-webkit-scrollbar-thumb:active {
+      background: var(--scrollbar-bg-active);
+    }
+  }
+
+  .katex-display > .katex {
+    display: block;
+    width: fit-content;
+    min-width: calc(100% - 2px);
+  }
+
+  .katex-display > .katex:has(.tag) > .katex-html {
+    display: block;
+    padding-right: 3rem;
+    box-sizing: border-box;
+  }
+}
+
+/* 外部覆盖样式 */
+.custom-md .expressive-code :is(ul, ol) li::marker {
+  @apply text-inherit;
+}
+
+:root:not(.dark) .custom-md spoiler {
+  --_spoiler-mask: color-mix(in oklch, var(--primary) 55%, white 45%);
 }
