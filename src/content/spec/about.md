@@ -1,7 +1,7 @@
 # About
 Hi, I am **Eatgrapes**, a developer.
 
-This blog is built with [Astro](https://astro.build) and [Fuwari](https://github.com/saicaca/fuwari).
+This blog is built with [Astro](https://astro.build) and [Mizuki](https://github.com/matsuzaka-yuki/Mizuki).
 
 - GitHub: [Eatgrapes](https://github.com/Eatgrapes)
 - Telegram: [@Eatgrapes232](https://t.me/Eatgrapes232)
