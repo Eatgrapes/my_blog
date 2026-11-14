@@ -1,5 +1,5 @@
 ---
-title: 关于DLSS5的一些看法（WIP)
+title: 关于DLSS5的一些看法
 published: 2026-10-25
 description: 对DLSS5一些看法
 category: Game
