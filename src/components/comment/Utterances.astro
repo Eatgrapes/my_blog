@@ -1,0 +1,117 @@
+---
+import { commentConfig } from "@/config";
+
+interface Props {
+	path: string;
+}
+
+const { path } = Astro.props;
+const config = commentConfig.utterances;
+---
+
+{
+	config && (
+		<utterances-comments
+			data-repo={config.repo}
+			data-issue-term={path}
+			data-label={config.label}
+		/>
+	)
+}
+
+<script>
+	const UTTERANCES_ORIGIN = "https://utteranc.es";
+
+	class UtterancesComments extends HTMLElement {
+		private visibilityObserver?: IntersectionObserver;
+		private themeObserver?: MutationObserver;
+
+		connectedCallback() {
+			this.themeObserver = new MutationObserver(() => this.updateTheme());
+			this.themeObserver.observe(document.documentElement, {
+				attributes: true,
+				attributeFilter: ["class"],
+			});
+
+			this.visibilityObserver = new IntersectionObserver(
+				(entries) => {
+					if (entries.some((entry) => entry.isIntersecting)) {
+						this.visibilityObserver?.disconnect();
+						this.loadComments();
+					}
+				},
+				{ rootMargin: "200px" },
+			);
+			this.visibilityObserver.observe(this);
+		}
+
+		disconnectedCallback() {
+			this.visibilityObserver?.disconnect();
+			this.themeObserver?.disconnect();
+		}
+
+		private getTheme() {
+			return document.documentElement.classList.contains("dark")
+				? "github-dark"
+				: "github-light";
+		}
+
+		private updateTheme() {
+			this.querySelector<HTMLIFrameElement>(".utterances-frame")
+				?.contentWindow?.postMessage(
+					{ type: "set-theme", theme: this.getTheme() },
+					UTTERANCES_ORIGIN,
+				);
+		}
+
+		private loadComments() {
+			const { repo, issueTerm, label } = this.dataset;
+			if (
+				!this.isConnected ||
+				!repo ||
+				!issueTerm ||
+				this.querySelector("script, iframe")
+			) {
+				return;
+			}
+
+			const script = document.createElement("script");
+			script.src = `${UTTERANCES_ORIGIN}/client.js`;
+			script.setAttribute("repo", repo);
+			script.setAttribute("issue-term", issueTerm);
+			script.setAttribute("theme", this.getTheme());
+			if (label) {
+				script.setAttribute("label", label);
+			}
+			script.crossOrigin = "anonymous";
+			script.async = true;
+			script.addEventListener(
+				"load",
+				() => {
+					this.querySelector(".utterances-frame")?.addEventListener(
+						"load",
+						() => this.updateTheme(),
+						{ once: true },
+					);
+				},
+				{ once: true },
+			);
+			this.append(script);
+		}
+	}
+
+	if (!customElements.get("utterances-comments")) {
+		customElements.define("utterances-comments", UtterancesComments);
+	}
+</script>
+
+<style>
+	utterances-comments {
+		display: block;
+		min-height: 200px;
+	}
+
+	utterances-comments :global(.utterances) {
+		max-width: 100%;
+	}
+</style>
