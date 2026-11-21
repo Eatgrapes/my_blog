@@ -105,9 +105,10 @@ export async function GET({
 	// Try to fetch fonts from Google Fonts (woff2) at runtime.
 	const { regular: fontRegular, bold: fontBold } = await fetchNotoSansSCFonts();
 
-	const avatarSrc = isRemoteImageSource(profileConfig.avatar)
-		? profileConfig.avatar
-		: `data:image/png;base64,${fs.readFileSync(`./src/${profileConfig.avatar}`).toString("base64")}`;
+	const avatar = profileConfig.avatar || "assets/images/avatar.png";
+	const avatarSrc = isRemoteImageSource(avatar)
+		? avatar
+		: `data:image/png;base64,${fs.readFileSync(`./src/${avatar}`).toString("base64")}`;
 
 	let iconPath = "./public/favicon/favicon.ico";
 	if (siteConfig.favicon.length > 0) {
