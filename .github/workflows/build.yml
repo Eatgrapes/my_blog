@@ -40,6 +40,9 @@ jobs:
       - name: Run Astro Check
         run: pnpm astro check
 
+      - name: Check comment worker
+        run: pnpm --filter @eatgrapes/comments check
+
   build:
     strategy:
       matrix:
@@ -65,3 +68,6 @@ jobs:
 
       - name: Run Astro Build
         run: pnpm astro build
+
+      - name: Build comment worker
+        run: pnpm --filter @eatgrapes/comments build

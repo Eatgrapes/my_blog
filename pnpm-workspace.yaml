@@ -1,5 +1,9 @@
+packages:
+  - workers/*
+
 allowBuilds:
   esbuild: true
+  workerd: true
   sharp: true
   ttf2woff2: true
 minimumReleaseAgeExclude:
@@ -45,3 +49,7 @@ minimumReleaseAgeExclude:
   - '@biomejs/cli-win32-arm64@2.5.2'
   - '@biomejs/cli-win32-x64@2.5.2'
   - '@iconify-json/material-symbols@1.2.82'
+  - '@cloudflare/workers-types@5.20261120.1'
+  - '@cloudflare/workers-utils@0.56.0'
+  - miniflare@5.20261119.0-beta
+  - wrangler@4.166.0

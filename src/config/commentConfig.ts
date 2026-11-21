@@ -4,7 +4,11 @@ import { SITE_LANG } from "./siteConfig";
 // 评论系统配置
 export const commentConfig: CommentConfig = {
 	enable: true,
-	system: "utterances",
+	system: "github",
+	github: {
+		repo: "Eatgrapes/my_blog",
+		apiUrl: "https://eatgrapes-blog-comments.ggghhh19.workers.dev",
+	},
 	utterances: {
 		repo: "Eatgrapes/my_blog",
 	},

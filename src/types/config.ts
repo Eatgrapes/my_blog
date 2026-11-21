@@ -275,10 +275,11 @@ export interface PermalinkConfig {
 
 export interface CommentConfig {
 	enable: boolean; // 是否启用评论功能
-	system?: "twikoo" | "giscus" | "utterances"; // 评论系统选择
+	system?: "twikoo" | "giscus" | "utterances" | "github"; // 评论系统选择
 	twikoo?: TwikooConfig;
 	giscus?: GiscusConfig;
 	utterances?: UtterancesConfig;
+	github?: { repo: string; apiUrl: string };
 }
 
 export interface UtterancesConfig {

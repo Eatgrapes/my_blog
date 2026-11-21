@@ -5,6 +5,7 @@ import { commentConfig } from "@/config";
 import { removeFileExtension } from "@/utils/url-utils";
 
 import Giscus from "./Giscus.astro";
+import GitHubComments from "./GitHubComments.svelte";
 import Twikoo from "./Twikoo.astro";
 import Utterances from "./Utterances.astro";
 
@@ -38,6 +39,9 @@ const commentEnabled = post ? (post.data.comment ?? true) : true;
 			{commentService === "twikoo" && <Twikoo path={path} />}
 			{commentService === "giscus" && <Giscus path={path} />}
 			{commentService === "utterances" && <Utterances path={path} />}
+			{commentService === "github" && commentConfig.github && (
+				<GitHubComments client:load path={path} repo={commentConfig.github.repo} apiUrl={commentConfig.github.apiUrl} />
+			)}
 			{commentService === "" && null}
 		</div>
 	)

@@ -1,0 +1,17 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "eatgrapes-blog-comments",
+	"account_id": "9e87de04c61972c9a920d2954d0412b3",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-11-21",
+	"workers_dev": true,
+	"preview_urls": false,
+	"vars": {
+		"SITE_URL": "https://eatgrapes.github.io/my_blog/",
+		"GITHUB_REPO": "Eatgrapes/my_blog"
+	},
+	"durable_objects": {
+		"bindings": [{ "name": "THREADS", "class_name": "CommentThread" }]
+	},
+	"migrations": [{ "tag": "v1", "new_sqlite_classes": ["CommentThread"] }]
+}

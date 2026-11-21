@@ -1,0 +1,20 @@
+{
+	"name": "@eatgrapes/comments",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"check": "tsc --noEmit",
+		"build": "wrangler deploy --dry-run",
+		"deploy": "wrangler deploy"
+	},
+	"dependencies": {
+		"@octokit/auth-app": "8.3.1",
+		"jose": "6.2.18",
+		"zod": "4.6.7"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "5.20261120.1",
+		"typescript": "^6.0.3",
+		"wrangler": "4.166.0"
+	}
+}
