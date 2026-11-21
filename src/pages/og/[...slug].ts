@@ -5,6 +5,7 @@ import type { APIContext, GetStaticPaths } from "astro";
 import { type Font, setGlyphCacheMaxBytes } from "takumi-js";
 import { ImageResponse } from "takumi-js/response";
 import { formatDateWithLocale } from "@/utils/date-utils";
+import { isRemoteImageSource } from "@/utils/image-source-utils";
 import { getPostPublicDescription } from "@/utils/post-card-content";
 import { removeFileExtension } from "@/utils/url-utils";
 import { profileConfig, siteConfig } from "../../config";
@@ -104,9 +105,9 @@ export async function GET({
 	// Try to fetch fonts from Google Fonts (woff2) at runtime.
 	const { regular: fontRegular, bold: fontBold } = await fetchNotoSansSCFonts();
 
-	// Avatar + icon: still read from disk (small assets)
-	const avatarBuffer = fs.readFileSync(`./src/${profileConfig.avatar}`);
-	const avatarBase64 = `data:image/png;base64,${avatarBuffer.toString("base64")}`;
+	const avatarSrc = isRemoteImageSource(profileConfig.avatar)
+		? profileConfig.avatar
+		: `data:image/png;base64,${fs.readFileSync(`./src/${profileConfig.avatar}`).toString("base64")}`;
 
 	let iconPath = "./public/favicon/favicon.ico";
 	if (siteConfig.favicon.length > 0) {
@@ -275,7 +276,7 @@ export async function GET({
 										{
 											type: "img",
 											props: {
-												src: avatarBase64,
+												src: avatarSrc,
 												width: 60,
 												height: 60,
 												style: { borderRadius: "50%" },
